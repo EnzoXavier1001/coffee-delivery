@@ -5,4 +5,5 @@ export interface ICoffee {
     tags: string[]
     amount: number
     img: string
+    quantity?: number
 }

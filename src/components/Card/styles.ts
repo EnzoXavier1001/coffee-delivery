@@ -70,3 +70,41 @@ export const CardAmount = styled.span`
         font-weight: 400;
     }
 `
+
+export const BuyNowWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    background: ${props => props.theme['--base-button']};
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 2.0rem;
+
+    button {
+        background: transparent;
+        outline: 0;
+        border: 0;
+        padding: 1.2rem 0.8rem;
+        cursor: pointer;
+    }
+`
+
+export const ButtonCart = styled.button`
+    border: 0;
+    outline: 0;
+
+    background: ${props => props.theme['--purple-900']};
+    padding: 0.8rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.7;
+    }
+`
+
+export const BuyNowCartWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+`

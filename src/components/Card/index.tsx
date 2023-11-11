@@ -1,5 +1,6 @@
+import { Minus, Plus, ShoppingCart } from "@phosphor-icons/react";
 import { ICoffee } from "../../@types/Coffee"
-import { CardAmount, CardContainer, CardDescription, CardFooter, CardTags, CardTitle, TagContainer } from "./styles"
+import { ButtonCart, BuyNowCartWrapper, BuyNowWrapper, CardAmount, CardContainer, CardDescription, CardFooter, CardTags, CardTitle, TagContainer } from "./styles"
 
 interface CardProps {
     coffeeData: ICoffee
@@ -28,13 +29,18 @@ export function Card({ coffeeData }: CardProps) {
             <CardFooter>
                 <CardAmount><small>R$</small>{formattedAmount}</CardAmount>
 
-                <div>
-                    <div>
-                        <button>-</button>
-                        <span>1</span>
-                        <button>+</button>
-                    </div>
-                </div>
+                <BuyNowCartWrapper>
+                    <BuyNowWrapper>
+                        <div>
+                            <button><Minus size={16} color="#8047F8" weight="bold" /></button>
+                            <span>1</span>
+                            <button><Plus size={16} color="#8047F8" weight="bold" /></button>
+                        </div>
+                    </BuyNowWrapper>
+                    <ButtonCart>
+                        <ShoppingCart size={24} weight="fill" color="#FFF" />
+                    </ButtonCart>
+                </BuyNowCartWrapper>
             </CardFooter>
         </CardContainer>
     )

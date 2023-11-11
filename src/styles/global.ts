@@ -7,6 +7,11 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
     html {
         font-size: 62.5%;
     }

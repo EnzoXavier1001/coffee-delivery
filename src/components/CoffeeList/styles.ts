@@ -17,6 +17,6 @@ export const CoffeeListTitle = styled.h2`
 
 export const CardList = styled.div`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    gap: 4rem 3.2rem;
 `

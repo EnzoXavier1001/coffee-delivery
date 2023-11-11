@@ -1,15 +1,17 @@
 import { ICoffee } from "../../@types/Coffee"
-import { CardContainer, CardDescription, CardFooter, CardTags, CardTitle, TagContainer } from "./styles"
+import { CardAmount, CardContainer, CardDescription, CardFooter, CardTags, CardTitle, TagContainer } from "./styles"
 
 interface CardProps {
     coffeeData: ICoffee
 }
 
 export function Card({ coffeeData }: CardProps) {
+    const formattedAmount = coffeeData.amount.toLocaleString('pt-br', {minimumFractionDigits: 2});
     const { tags } = coffeeData
 
     return (
         <CardContainer>
+            <img src={coffeeData.img} alt={coffeeData.name} />
             <TagContainer>
                 {tags.map(tag => (
                     <CardTags>
@@ -24,7 +26,7 @@ export function Card({ coffeeData }: CardProps) {
                 {coffeeData.description}
             </CardDescription>
             <CardFooter>
-                <span>{coffeeData.amount}</span>
+                <CardAmount><small>R$</small>{formattedAmount}</CardAmount>
 
                 <div>
                     <div>

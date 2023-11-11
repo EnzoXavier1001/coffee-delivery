@@ -18,7 +18,7 @@ export function Card({ coffeeData, onAddCart, onDeleteCart, onSaveCart }: CardPr
             <img src={coffeeData.img} alt={coffeeData.name} />
             <TagContainer>
                 {tags.map(tag => (
-                    <CardTags>
+                    <CardTags key={tag}>
                         {tag}
                     </CardTags>
                 ))}

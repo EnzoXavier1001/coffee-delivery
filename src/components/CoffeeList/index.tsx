@@ -61,7 +61,7 @@ export function CoffeeList() {
             <CoffeeListTitle>Nossos cafés</CoffeeListTitle>
 
             <CardList>
-                {coffee.map(coffeeItem => (
+                {coffee.map((coffeeItem) => (
                     <Card onSaveCart={handleSaveCart} onDeleteCart={handleDecreaseToCart} onAddCart={handleIncreaseToCart} key={coffeeItem.id} coffeeData={coffeeItem} />
                 ))}
             </CardList>

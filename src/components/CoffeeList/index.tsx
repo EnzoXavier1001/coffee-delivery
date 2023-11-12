@@ -40,18 +40,22 @@ export function CoffeeList() {
     }
 
     function handleSaveCart(data: ICoffee) {
-        // if(cart.length > 0) {
-        //     const filteredList = cart.map(cartItem => {
-        //         if(cartItem.id !== data.id) {
-        //             setCart((state) => [...state, data])
-        //         } else {
-        //             //   
-        //         }
-        //         return cartItem
-        //     })
-        // } else {
-        //     setCart((state) => [...state, data])
-        // }
+        const newList = cart.filter(cartItem => {
+            return cartItem.id !== data.id
+        })
+
+        if(cart.length > 0) {
+            cart.map(cartItem => {
+                if(cartItem.id !== data.id) {
+                    setCart((state) => [...state, data])
+                } else {
+                    setCart([...newList, data])
+                }
+                return cartItem
+            })
+        } else {
+            setCart((state) => [...state, data])
+        }
     }
 
     useEffect(() => console.log(cart), [cart])

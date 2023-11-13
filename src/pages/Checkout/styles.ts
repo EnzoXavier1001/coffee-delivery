@@ -20,17 +20,12 @@ export const BaseCardLayout = styled.div`
     background: ${props => props.theme['--base-card']};
     padding: 4.0rem;
     border-radius: 6px;
-`
 
-export const FormCheckoutStyles = styled(BaseCardLayout)`
-    display: flex;
-    flex-direction: column;
-    
     header {
        display: flex;
        gap: 0.8rem;
        align-items: center;
-       margin-bottom: 5.5rem;
+       margin-bottom: 3.2rem;
 
        h3 {
             color: ${props => props.theme['--base-subtitle']};
@@ -42,21 +37,22 @@ export const FormCheckoutStyles = styled(BaseCardLayout)`
             color: ${props => props.theme['--base-text']};
        }
     }
-    
-    input {
-            outline: none;
-            background: ${props => props.theme['--base-input']};
-            border: none;
-            padding: 1.2rem;
-            border-radius: 6px;
-            color: ${props => props.theme['--base-text']};
-            margin-bottom: 1.8rem;
-       }
+`
 
-       div {
-        display: flex;
-        gap: 1.2rem;
-       }
+export const FormCheckoutStyles = styled(BaseCardLayout)`
+    display: flex;
+    flex-direction: column;
+
+    input {
+        outline: none;
+        background: ${props => props.theme['--base-input']};
+        border: none;
+        padding: 1.2rem;
+        border-radius: 6px;
+        color: ${props => props.theme['--base-text']};
+        margin-bottom: 1.8rem;
+    }
+
 `
 
 export const FormCheckout = styled.form`
@@ -73,3 +69,46 @@ export const CoffeeDisplay = styled.div`
 export const FormPayment = styled(BaseCardLayout)``
 
 export const CloseOrder = styled.button``
+
+export const FormGroup = styled.div`
+    display: flex;
+    gap: 1.2rem;
+    
+    input {
+        flex: 1;
+    }
+`
+
+export const ButtonWrapper = styled.div`
+    display: flex;
+    gap: 1.2rem;
+`
+
+export const ButtonPayment = styled.button`
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    cursor: pointer;
+    border: 0;
+    outline: none;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+
+    color: ${props => props.theme['--base-text']};
+    font-weight: 500;
+
+    flex: 1;
+    padding: 1.6rem;
+    border-radius: 6px;
+
+    background: ${props => props.theme['--base-button']};
+
+    transition: background 0.3s;
+
+    &:hover {
+        background: ${props => props.theme['--base-hover']}
+    }
+
+    
+`

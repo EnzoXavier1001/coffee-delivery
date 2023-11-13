@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { coffeeData } from "../../data/coffeeData";
 import { CardList, CoffeeListContainer, CoffeeListTitle } from "./styles";
 import { ICoffee } from "../../@types/Coffee";
@@ -39,26 +39,26 @@ export function CoffeeList() {
         setCoffee([...newList])
     }
 
-    function handleSaveCart(data: ICoffee) {
-        const newList = cart.filter(cartItem => {
-            return cartItem.id !== data.id
-        })
+    async function handleSaveCart(data: ICoffee) {
+        const coffeeExistsInCart = cart.findIndex(cartItem => cartItem.id === data.id)
 
         if(cart.length > 0) {
-            cart.map(cartItem => {
-                if(cartItem.id !== data.id) {
-                    setCart((state) => [...state, data])
-                } else {
-                    setCart([...newList, data])
-                }
-                return cartItem
-            })
+            if(coffeeExistsInCart !== -1) {
+                const newCart = [...cart]
+                newCart[coffeeExistsInCart].quantity = data.quantity
+                localStorage.setItem('@cart', JSON.stringify(newCart))
+                setCart([...newCart])
+            } else {
+                const newCart = [...cart, data]
+                localStorage.setItem('@cart', JSON.stringify(newCart))
+                setCart(newCart)
+            }
         } else {
-            setCart((state) => [...state, data])
+            const newCart = [...cart, data]
+            localStorage.setItem('@cart', JSON.stringify(newCart))
+            setCart(newCart)
         }
     }
-
-    useEffect(() => console.log(cart), [cart])
 
     return (
         <CoffeeListContainer>

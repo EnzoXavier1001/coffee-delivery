@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { ICoffee } from "../@types/Coffee";
 import { coffeeData } from "../data/coffeeData";
+import { toast } from 'react-toastify';
 
 interface CartContextType {
     coffee: ICoffee[],
@@ -21,9 +22,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     const [cart, setCart] = useState<ICoffee[]>([])
 
     useEffect(() => {
-        const coffeeStored = JSON.parse(localStorage.getItem('@cart')!)
+        const coffeeStored = JSON.parse(localStorage.getItem('@CoffeeDelivery:cart')!)
 
-        setCart(coffeeStored)
+        if(coffeeStored) {
+            setCart(coffeeStored)
+        } 
     }, [])
 
     function handleIncreaseToCart(id: string) {
@@ -64,18 +67,20 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
             if(coffeeExistsInCart !== -1) {
                 const newCart = [...cart]
                 newCart[coffeeExistsInCart].quantity = data.quantity
-                localStorage.setItem('@cart', JSON.stringify(newCart))
+                localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(newCart))
                 setCart([...newCart])
             } else {
                 const newCart = [...cart, data]
-                localStorage.setItem('@cart', JSON.stringify(newCart))
+                localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(newCart))
                 setCart(newCart)
             }
         } else {
             const newCart = [...cart, data]
-            localStorage.setItem('@cart', JSON.stringify(newCart))
+            localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(newCart))
             setCart(newCart)
         }
+
+        toast.success('Item adicionado ao carrinho com sucesso')
     }
    
     return (
@@ -84,7 +89,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
            coffee,
            handleDecreaseToCart,
            handleSaveCart,
-           handleIncreaseToCart
+           handleIncreaseToCart,
         }}>
             {children}
         </CartContext.Provider>

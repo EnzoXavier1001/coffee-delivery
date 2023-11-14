@@ -1,9 +1,10 @@
-import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "@phosphor-icons/react";
-import { ButtonPayment, ButtonWrapper, CheckoutContainer, CloseOrder, CoffeeDisplay, FormCheckout, FormCheckoutStyles, FormGroup, FormPayment, FormWrapper } from "./styles";
+import { Bank, CreditCard, CurrencyDollar, MapPinLine, Minus, Money, Plus, Trash } from "@phosphor-icons/react";
+import { ButtonPayment, ButtonRemove, ButtonWrapper, ButtonsWrapper, CardDivider, CheckoutContainer, CloseOrder, CoffeeCard, CoffeeCardWrapper, CoffeeDisplay, CoffeeDisplayContainer, CoffeeDisplayList, CoffeeTotalAmount, FormCheckout, FormCheckoutStyles, FormGroup, FormPayment, FormWrapper } from "./styles";
 import { useForm } from "react-hook-form";
 import * as zod from 'zod'
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutFormValidationSchema = zod.object({
     cep: zod.string().min(8).max(9),
@@ -18,16 +19,14 @@ const CheckoutFormValidationSchema = zod.object({
 type CheckoutFormData = zod.infer<typeof CheckoutFormValidationSchema>
 
 export function Checkout() {
+    const navigate = useNavigate()
+    const { cart } = useContext(CartContext)
     const { register, handleSubmit, reset } = useForm<CheckoutFormData>()
 
-    const { cart } = useContext(CartContext)
-
-    console.log(cart)
-    
     function handleCreateOrder(data: CheckoutFormData) {
-        localStorage.setItem('@user-info', JSON.stringify(data))
-        console.log(data)
         reset()
+        localStorage.setItem('@user-info', JSON.stringify(data))
+        navigate("/success")
     }
 
     return (
@@ -86,29 +85,49 @@ export function Checkout() {
                 </FormWrapper>
                 <CoffeeDisplay>
                     <h2>Cafés selecionados</h2>
-                    <div>
-                        <div>
-                            <div>
-                            
-                            </div>
-                        </div>
+                    <CoffeeDisplayContainer>
+                        <CoffeeDisplayList>
+                            {cart.map(cartItem => (
+                                <div key={cartItem.id}>
+                                    <CoffeeCard key={cartItem.id}>
+                                        <img src={cartItem.img} alt="" />
+                                        <CoffeeCardWrapper>
+                                            <header>
+                                                <h3>{cartItem.name}</h3>
+                                                <span>{cartItem.amount}</span>
+                                            </header>
+                                            <ButtonsWrapper>
+                                                <div>
+                                                    <button><Minus size={14} color="#8047F8" weight="bold" /></button>
+                                                    <span>{cartItem.quantity}</span>
+                                                    <button><Plus size={14} color="#8047F8" weight="bold" /></button>
+                                                </div>
+                                                <ButtonRemove><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
+                                            </ButtonsWrapper>
+                                        </CoffeeCardWrapper>
+                                    </CoffeeCard>
+                                    <CardDivider />
+                                </div>
+                               
+                            ))}
+                        </CoffeeDisplayList>
 
-                        <div>
+                        <CoffeeTotalAmount>
                             <div>
                                 <span>Total de itens</span>
-                                <span>R$ 29,70</span>
+                                <span>R$ 33,00</span>
                             </div>
                             <div>
                                 <span>Entrega</span>
                                 <span>R$ 3,50</span>
                             </div>
                             <div>
-                                <span>Total</span>
+                                <span><strong>Total</strong></span>
                                 <span>R$ 33,20</span>
                             </div>
-                        </div>
+                        </CoffeeTotalAmount>
                         <CloseOrder type="submit">Confirmar perdido</CloseOrder>
-                    </div>
+                    </CoffeeDisplayContainer>
                 </CoffeeDisplay>
             </FormCheckout>
         </CheckoutContainer>

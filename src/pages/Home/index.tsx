@@ -2,6 +2,8 @@ import { Coffee, Package, ShoppingCart, Timer } from "@phosphor-icons/react";
 import { HomeContainer, HomeContent, HomeSection, IconWrapper, ListBenefits } from "./styles";
 import coffeeMainImage from '../../assets/coffee-main.png'
 import { CoffeeList } from "../../components/CoffeeList";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
 
 export function Home() {
     return (
@@ -43,6 +45,7 @@ export function Home() {
                 </HomeSection>
             </HomeContainer>
             <CoffeeList />
+            <ToastContainer />
         </>
     )
 }

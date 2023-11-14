@@ -36,7 +36,7 @@ export function Card({ coffeeData, onAddCart, onDeleteCart, onSaveCart }: CardPr
                     <BuyNowWrapper>
                         <div>
                             <button onClick={() => onDeleteCart(coffeeData.id)}><Minus size={16} color="#8047F8" weight="bold" /></button>
-                            <span>{coffeeData.quantity ? coffeeData.quantity : 1}</span>
+                            <span>{coffeeData.quantity ? coffeeData.quantity : 0}</span>
                             <button onClick={() => onAddCart(coffeeData.id)}><Plus size={16} color="#8047F8" weight="bold" /></button>
                         </div>
                     </BuyNowWrapper>

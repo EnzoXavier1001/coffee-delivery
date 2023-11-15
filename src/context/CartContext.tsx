@@ -9,9 +9,12 @@ interface CartContextType {
     handleIncreaseToCart: (id: string) => void
     handleDecreaseToCart: (id: string) => void
     handleSaveCart: (data: ICoffee) => void
+<<<<<<< HEAD
     handleAddToCart: (id: string) => void
     handleRemoveAllProducts: (id: string) => void
     handleDeleteToCart: (id: string) => void
+=======
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
 }
 
 interface CartContextProviderProps {
@@ -32,12 +35,15 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         } 
     }, [])
 
+<<<<<<< HEAD
     useEffect(() => {
         if(cart.length > 0) {
             localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(cart));
         }
     }, [cart]);
 
+=======
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
     function handleIncreaseToCart(id: string) {
         const newList = coffee.map(item => {
             if(item.id === id) {
@@ -91,6 +97,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
         toast.success('Item adicionado ao carrinho com sucesso')
     }
+<<<<<<< HEAD
 
     function handleAddToCart(id: string) {
         const newList = cart.map(item => {
@@ -130,15 +137,20 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
         setCart([...newList])
     }
+=======
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
    
     return (
         <CartContext.Provider value={{
            cart,
            coffee,
            handleDecreaseToCart,
+<<<<<<< HEAD
            handleRemoveAllProducts,
            handleAddToCart,
            handleDeleteToCart,
+=======
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
            handleSaveCart,
            handleIncreaseToCart,
         }}>

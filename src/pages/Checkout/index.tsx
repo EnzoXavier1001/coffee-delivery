@@ -5,8 +5,11 @@ import * as zod from 'zod'
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { ICoffee } from "../../@types/Coffee";
 import { formatAmount } from "../../utils/formatAmount";
+=======
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
 
 const CheckoutFormValidationSchema = zod.object({
     cep: zod.string().min(8).max(9),
@@ -22,6 +25,7 @@ type CheckoutFormData = zod.infer<typeof CheckoutFormValidationSchema>
 
 export function Checkout() {
     const navigate = useNavigate()
+<<<<<<< HEAD
     const { handleAddToCart, handleRemoveAllProducts, handleDeleteToCart, cart } = useContext(CartContext)
     const { register, handleSubmit, reset } = useForm<CheckoutFormData>()
 
@@ -52,6 +56,17 @@ export function Checkout() {
         handleDeleteToCart(cartItem.id)
     }
 
+=======
+    const { cart } = useContext(CartContext)
+    const { register, handleSubmit, reset } = useForm<CheckoutFormData>()
+
+    function handleCreateOrder(data: CheckoutFormData) {
+        reset()
+        localStorage.setItem('@user-info', JSON.stringify(data))
+        navigate("/success")
+    }
+
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
     return (
         <CheckoutContainer>
             <FormCheckout onSubmit={handleSubmit(handleCreateOrder)}>
@@ -66,19 +81,34 @@ export function Checkout() {
                             </div>
                         </header>
 
+<<<<<<< HEAD
                         <input type="text" placeholder="CEP" {...register("cep")} required />
 
                         <input type="text" placeholder="Rua" {...register("street")} required  />
 
                         <FormGroup>
                             <input type="text" placeholder="Número" {...register("number")} required/>
+=======
+                        <input type="text" placeholder="CEP" {...register("cep")} />
+
+                        <input type="text" placeholder="Rua" {...register("street")}  />
+
+                        <FormGroup>
+                            <input type="text" placeholder="Número" {...register("number")}/>
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
                             <input type="text" placeholder="Complemento" {...register("complement")}/>
                         </FormGroup>
 
                         <FormGroup>
+<<<<<<< HEAD
                             <input type="text" placeholder="Bairro" {...register("district")} required/>
                             <input type="text" placeholder="Cidade" {...register("city")} required/>
                             <input type="text" placeholder="UF" {...register("uf")} required/>
+=======
+                            <input type="text" placeholder="Bairro" {...register("district")}/>
+                            <input type="text" placeholder="Cidade" {...register("city")}/>
+                            <input type="text" placeholder="UF" {...register("uf")}/>
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
                         </FormGroup>
                     </FormCheckoutStyles>
                     <FormPayment>
@@ -110,6 +140,7 @@ export function Checkout() {
                     <h2>Cafés selecionados</h2>
                     <CoffeeDisplayContainer>
                         <CoffeeDisplayList>
+<<<<<<< HEAD
                             {cart.length > 0 ? (
                                 cart.map((cartItem, index) => (
                                     <>
@@ -156,6 +187,48 @@ export function Checkout() {
                                 <p>não ha nenhum item na lista</p>
                             )}
                         </CoffeeDisplayList>
+=======
+                            {cart.map(cartItem => (
+                                <div key={cartItem.id}>
+                                    <CoffeeCard key={cartItem.id}>
+                                        <img src={cartItem.img} alt="" />
+                                        <CoffeeCardWrapper>
+                                            <header>
+                                                <h3>{cartItem.name}</h3>
+                                                <span>{cartItem.amount}</span>
+                                            </header>
+                                            <ButtonsWrapper>
+                                                <div>
+                                                    <button><Minus size={14} color="#8047F8" weight="bold" /></button>
+                                                    <span>{cartItem.quantity}</span>
+                                                    <button><Plus size={14} color="#8047F8" weight="bold" /></button>
+                                                </div>
+                                                <ButtonRemove><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
+                                            </ButtonsWrapper>
+                                        </CoffeeCardWrapper>
+                                    </CoffeeCard>
+                                    <CardDivider />
+                                </div>
+                               
+                            ))}
+                        </CoffeeDisplayList>
+
+                        <CoffeeTotalAmount>
+                            <div>
+                                <span>Total de itens</span>
+                                <span>R$ 33,00</span>
+                            </div>
+                            <div>
+                                <span>Entrega</span>
+                                <span>R$ 3,50</span>
+                            </div>
+                            <div>
+                                <span><strong>Total</strong></span>
+                                <span>R$ 33,20</span>
+                            </div>
+                        </CoffeeTotalAmount>
+                        <CloseOrder type="submit">Confirmar perdido</CloseOrder>
+>>>>>>> 8fd36ad542171da0563c160290ff7e200de1dd2d
                     </CoffeeDisplayContainer>
                 </CoffeeDisplay>
             </FormCheckout>

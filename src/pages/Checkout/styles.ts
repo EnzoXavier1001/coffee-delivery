@@ -14,7 +14,7 @@ export const CheckoutContainer = styled.main`
 `
 
 export const FormWrapper = styled.div`
-    flex: 2;
+    flex: 3;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
@@ -51,6 +51,7 @@ export const BaseCardLayout = styled.div`
 export const FormCheckoutStyles = styled(BaseCardLayout)`
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     input {
         outline: none;
@@ -76,7 +77,7 @@ export const FormCheckout = styled.form`
 `
 
 export const CoffeeDisplay = styled.div`
-    flex: 1;
+    flex: 2;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -87,6 +88,7 @@ export const CoffeeDisplay = styled.div`
 `
 
 export const FormPayment = styled(BaseCardLayout)`
+    width: 100%;
 `
 
 export const CloseOrder = styled.button`
@@ -169,6 +171,7 @@ export const CoffeeDisplayList = styled.div`
 
 export const CoffeeCard = styled.div`
     display: flex;
+    width: 100%;
     gap: 2.0rem;
 
     img {
@@ -212,13 +215,20 @@ export const ButtonsWrapper = styled.div`
 
 export const CoffeeCardWrapper = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: column;
 
     header {
         margin-bottom: 0.8rem;
+        justify-content: space-between;
 
         h3 {
             font-size: 1.6rem;
+        }
+
+        span {
+            color: ${props => props.theme['--base-text']};
+            font-weight: 600;
         }
     }
 `
@@ -233,8 +243,13 @@ export const CoffeeTotalAmount = styled.div`
         align-items: center;
         justify-content: space-between;
 
+        span {
+            color: ${props => props.theme['--base-text']};
+        }
+
         span > strong {
             color: ${props => props.theme['--base-subtitle']};
+            font-size: 2.0rem;
         }
     }
 `
@@ -253,4 +268,9 @@ export const ButtonRemove = styled.button`
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    transition: filter 0.3s;
+
+    &:hover {
+        filter: brightness(0.8);
+    }
 `

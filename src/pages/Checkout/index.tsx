@@ -111,50 +111,49 @@ export function Checkout() {
                     <CoffeeDisplayContainer>
                         <CoffeeDisplayList>
                             {cart.length > 0 ? (
-                                cart.map((cartItem, index) => (
-                                    <>
-                                    <div key={index}>
-                                        <CoffeeCard>
-                                            <img src={cartItem.img} alt={cartItem.name} />
-                                            <CoffeeCardWrapper>
-                                                <header>
-                                                    <h3>{cartItem.name}</h3>
-                                                    <span>R$ {formatAmount(cartItem.amount)}</span>
-                                                </header>
-                                                <ButtonsWrapper>
-                                                    <div>
-                                                        <button onClick={() => handleRemoveProductOnCart(cartItem)} type="button"><Minus size={14} color="#8047F8" weight="bold" /></button>
-                                                        <span>{cartItem.quantity}</span>
-                                                        <button onClick={() => handleSaveNewCart(cartItem)} type="button"><Plus size={14} color="#8047F8" weight="bold" /></button>
-                                                    </div>
-                                                    <ButtonRemove onClick={() => handleRemoveAllProducts(cartItem.id)} type="button"><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
-                                                </ButtonsWrapper>
-                                            </CoffeeCardWrapper>
-                                        </CoffeeCard>
-                                        <CardDivider />
+                                cart.map((cartItem) => (
+                                    <div key={cartItem.id}>
+                                        <div>
+                                            <CoffeeCard>
+                                                <img src={cartItem.img} alt={cartItem.name} />
+                                                <CoffeeCardWrapper>
+                                                    <header>
+                                                        <h3>{cartItem.name}</h3>
+                                                        <span>R$ {formatAmount(cartItem.amount)}</span>
+                                                    </header>
+                                                    <ButtonsWrapper>
+                                                        <div>
+                                                            <button onClick={() => handleRemoveProductOnCart(cartItem)} type="button"><Minus size={14} color="#8047F8" weight="bold" /></button>
+                                                            <span>{cartItem.quantity}</span>
+                                                            <button onClick={() => handleSaveNewCart(cartItem)} type="button"><Plus size={14} color="#8047F8" weight="bold" /></button>
+                                                        </div>
+                                                        <ButtonRemove onClick={() => handleRemoveAllProducts(cartItem.id)} type="button"><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
+                                                    </ButtonsWrapper>
+                                                </CoffeeCardWrapper>
+                                            </CoffeeCard>
+                                            <CardDivider />
+                                        </div>
                                     </div>
-                                
-                                    <CoffeeTotalAmount>
+                                ))
+                            ): (
+                                <p>não ha nenhum item na lista</p>
+                            )}
+                              <CoffeeTotalAmount>
                                     <div>
                                         <span>Total de itens</span>
                                         <span>R$ {formatAmount(sumAllValues)}</span>
                                     </div>
                                     <div>
                                         <span>Entrega</span>
-                                        <span>R$ 3,50</span>
+                                        <span>{totalWithDelivery > 100 ? 'Entrega grátis' : `R$ 3,50`}</span>
                                     </div>
                                     <div>
                                         <span><strong>Total</strong></span>
-                                        <span>{totalWithDelivery > 100 ? 'Entrega grátis' : `R$ ${formatAmount(totalWithDelivery)}`}</span>
+                                        <span>R${totalWithDelivery > 100 ? formatAmount(sumAllValues) : formatAmount(totalWithDelivery)}</span>
                                     </div>
                                     <p>Entre grátis acima de 100*</p>
                                 </CoffeeTotalAmount>
-                                <CloseOrder type="submit">Confirmar perdido</CloseOrder>
-                                </>
-                                ))
-                            ): (
-                                <p>não ha nenhum item na lista</p>
-                            )}
+                            <CloseOrder type="submit" disabled={cart.length > 0 ? false: true}>Confirmar perdido</CloseOrder>
                         </CoffeeDisplayList>
                     </CoffeeDisplayContainer>
                 </CoffeeDisplay>

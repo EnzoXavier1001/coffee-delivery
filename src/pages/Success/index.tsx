@@ -3,8 +3,21 @@ import { ContentWrapper, SuccessContainer, SuccessDescription, SuccessIcon, Succ
 import successImg from '../../assets/success.png'
 import { CurrencyDollar, MapPin, Timer } from "@phosphor-icons/react";
 
+interface OrderInfo {
+    address: {
+        cep: number
+        street: string
+        number: number
+        complement: string
+        district: string
+        city: string
+        uf: string
+    }
+    formPayment: string
+}
+
 export function Success() {
-    const [orderInfo, setOrderInfo] = useState({})
+    const [orderInfo, setOrderInfo] = useState<OrderInfo>()
 
     useEffect(() => {
         const orderInfoStored = JSON.parse(localStorage.getItem('@CoffeeDelivery:order')!)

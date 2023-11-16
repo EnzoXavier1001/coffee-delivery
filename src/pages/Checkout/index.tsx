@@ -39,9 +39,9 @@ export function Checkout() {
             },
             formPayment: 'Cartão de Crédito'
         }
-        reset()
         localStorage.setItem('@CoffeeDelivery:order', JSON.stringify(newOrder))
-        navigate("/success")
+        reset()
+        navigate("/checkout/success")
     }
 
     function handleSaveNewCart(cartItem: ICoffee) {

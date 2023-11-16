@@ -101,7 +101,9 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     function handleRemoveCartQuantity(id: string) {
         const newList = cart.map(item => {
             if(item.id === id) {
-                return { ...item, quantity: item.quantity! - 1}
+                if(item.quantity! > 0) {
+                    return { ...item, quantity: item.quantity! - 1}
+                }
             }
             return item
         })

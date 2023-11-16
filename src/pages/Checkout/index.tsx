@@ -32,7 +32,7 @@ export function Checkout() {
 
     const totalCartWithDelivery = totalCart + 3.50
 
-    const totalCartHasFreeShipping = totalCartWithDelivery > 100 ? 'Entrega Grátis' : 3.50
+    const totalCartHasFreeShipping = totalCartWithDelivery > 100 ? 'Entrega Grátis' : `R$ ${formatAmount(3.50)}`
 
     const showAmountTotalCart = totalCartWithDelivery > 100 ? formatAmount(totalCart) : formatAmount(totalCartWithDelivery)
 
@@ -153,7 +153,7 @@ export function Checkout() {
                                     </div>
                                     <div>
                                         <span><strong>Total</strong></span>
-                                        <span>R${showAmountTotalCart}</span>
+                                        <span>R$ {showAmountTotalCart}</span>
                                     </div>
                                     <p>Entre grátis acima de 100*</p>
                                  </CoffeeTotalAmount>

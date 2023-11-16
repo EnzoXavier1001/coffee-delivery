@@ -3,9 +3,9 @@ import { ContentWrapper, SuccessContainer, SuccessDescription, SuccessIcon, Succ
 import successImg from '../../assets/success.png'
 import { CurrencyDollar, MapPin, Timer } from "@phosphor-icons/react";
 
-interface OrderInfo {
+export interface OrderInfo {
     address: {
-        cep: number
+        cep: string
         street: string
         number: number
         complement: string
@@ -21,12 +21,9 @@ export function Success() {
 
     useEffect(() => {
         const orderInfoStored = JSON.parse(localStorage.getItem('@CoffeeDelivery:order')!)
-        console.log(orderInfoStored)
-
         setOrderInfo(orderInfoStored)
     }, [])
 
-    
     return (
         <SuccessContainer>
             <SuccessTitle>
@@ -62,7 +59,7 @@ export function Success() {
                         </ContentWrapper>
                     </div>
                 </SucessInfoGroup>
-                <img src={successImg} alt="" />
+                <img src={successImg} alt="Imagem de sucesso" />
             </SuccessInfo>
         </SuccessContainer>
     )

@@ -1,21 +1,22 @@
 import { Minus, Plus, ShoppingCart } from "@phosphor-icons/react";
 import { ICoffee } from "../../@types/Coffee"
 import { ButtonCart, BuyNowCartWrapper, BuyNowWrapper, CardAmount, CardContainer, CardDescription, CardFooter, CardTags, CardTitle, TagContainer } from "./styles"
+import { formatAmount } from "../../utils/formatAmount";
 
 interface CardProps {
-    coffeeData: ICoffee
+    coffee: ICoffee
     onAddCart: (id: string) => void
     onDeleteCart: (id: string) => void
-    onSaveCart: (data: ICoffee) => void
+    onSaveCart: (coffee: ICoffee) => void
 }
 
-export function Card({ coffeeData, onAddCart, onDeleteCart, onSaveCart }: CardProps) {
-    const formattedAmount = coffeeData.amount.toLocaleString('pt-br', {minimumFractionDigits: 2});
-    const { tags } = coffeeData
+export function Card({ coffee, onAddCart, onDeleteCart, onSaveCart }: CardProps) {
+    const { tags } = coffee
+    const formattedAmount = formatAmount(coffee.amount);
 
     return (
         <CardContainer>
-            <img src={coffeeData.img} alt={coffeeData.name} />
+            <img src={coffee.img} alt={coffee.name} />
             <TagContainer>
                 {tags.map(tag => (
                     <CardTags key={tag}>
@@ -24,10 +25,10 @@ export function Card({ coffeeData, onAddCart, onDeleteCart, onSaveCart }: CardPr
                 ))}
             </TagContainer>
             <CardTitle>
-                {coffeeData.name}
+                {coffee.name}
             </CardTitle>
             <CardDescription>
-                {coffeeData.description}
+                {coffee.description}
             </CardDescription>
             <CardFooter>
                 <CardAmount><small>R$</small>{formattedAmount}</CardAmount>
@@ -35,12 +36,16 @@ export function Card({ coffeeData, onAddCart, onDeleteCart, onSaveCart }: CardPr
                 <BuyNowCartWrapper>
                     <BuyNowWrapper>
                         <div>
-                            <button onClick={() => onDeleteCart(coffeeData.id)}><Minus size={16} color="#8047F8" weight="bold" /></button>
-                            <span>{coffeeData.quantity ? coffeeData.quantity : 0}</span>
-                            <button onClick={() => onAddCart(coffeeData.id)}><Plus size={16} color="#8047F8" weight="bold" /></button>
+                            <button onClick={() => onDeleteCart(coffee.id)}>
+                                <Minus size={16} color="#8047F8" weight="bold" />
+                            </button>
+                            <span>{coffee.quantity ? coffee.quantity : 0}</span>
+                            <button onClick={() => onAddCart(coffee.id)}>
+                                <Plus size={16} color="#8047F8" weight="bold" />
+                            </button>
                         </div>
                     </BuyNowWrapper>
-                    <ButtonCart onClick={() => onSaveCart(coffeeData)}>
+                    <ButtonCart onClick={() => onSaveCart(coffee)}>
                         <ShoppingCart size={24} weight="fill" color="#FFF" />
                     </ButtonCart>
                 </BuyNowCartWrapper>

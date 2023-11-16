@@ -5,8 +5,8 @@ import * as zod from 'zod'
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
-import { ICoffee } from "../../@types/Coffee";
 import { formatAmount } from "../../utils/formatAmount";
+import { OrderInfo } from "../Success";
 
 const CheckoutFormValidationSchema = zod.object({
     cep: zod.string().min(8).max(9),
@@ -22,34 +22,37 @@ type CheckoutFormData = zod.infer<typeof CheckoutFormValidationSchema>
 
 export function Checkout() {
     const navigate = useNavigate()
-    const { handleAddToCart, handleRemoveAllProducts, handleDeleteToCart, cart } = useContext(CartContext)
+    const { cart, handleAddCartQuantity, handleDeleteCoffee, handleRemoveCartQuantity} = useContext(CartContext)
     const { register, handleSubmit, reset } = useForm<CheckoutFormData>()
 
-    const sumAllValues: number = cart.reduce((prev, cartItem) => {
+    const totalCart: number = cart.reduce((prevCart, cartItem) => {
         const itemTotal = cartItem.amount * cartItem.quantity!;
-        return prev + itemTotal;
+        return prevCart + itemTotal;
     }, 0);
 
-    const totalWithDelivery = sumAllValues + 3.50
+    const totalCartWithDelivery = totalCart + 3.50
+
+    const totalCartHasFreeShipping = totalCartWithDelivery > 100 ? 'Entrega Grátis' : 3.50
+
+    const showAmountTotalCart = totalCartWithDelivery > 100 ? formatAmount(totalCart) : formatAmount(totalCartWithDelivery)
 
     function handleCreateOrder(data: CheckoutFormData) {
-        const newOrder = {
+        const { cep, city, complement, district, number, street, uf } = data 
+        const newOrder: OrderInfo = {
             address: {
-                ...data
+                cep, 
+                city, 
+                complement, 
+                district, 
+                number, 
+                street, 
+                uf
             },
             formPayment: 'Cartão de Crédito'
         }
         localStorage.setItem('@CoffeeDelivery:order', JSON.stringify(newOrder))
         reset()
         navigate("/checkout/success")
-    }
-
-    function handleSaveNewCart(cartItem: ICoffee) {
-        handleAddToCart(cartItem.id)
-    }
-
-    function handleRemoveProductOnCart(cartItem: ICoffee) {
-        handleDeleteToCart(cartItem.id)
     }
 
     return (
@@ -123,11 +126,11 @@ export function Checkout() {
                                                     </header>
                                                     <ButtonsWrapper>
                                                         <div>
-                                                            <button onClick={() => handleRemoveProductOnCart(cartItem)} type="button"><Minus size={14} color="#8047F8" weight="bold" /></button>
+                                                            <button onClick={() => handleRemoveCartQuantity(cartItem.id)} type="button"><Minus size={14} color="#8047F8" weight="bold" /></button>
                                                             <span>{cartItem.quantity}</span>
-                                                            <button onClick={() => handleSaveNewCart(cartItem)} type="button"><Plus size={14} color="#8047F8" weight="bold" /></button>
+                                                            <button onClick={() => handleAddCartQuantity(cartItem.id)} type="button"><Plus size={14} color="#8047F8" weight="bold" /></button>
                                                         </div>
-                                                        <ButtonRemove onClick={() => handleRemoveAllProducts(cartItem.id)} type="button"><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
+                                                        <ButtonRemove onClick={() => handleDeleteCoffee(cartItem.id)} type="button"><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
                                                     </ButtonsWrapper>
                                                 </CoffeeCardWrapper>
                                             </CoffeeCard>
@@ -138,22 +141,25 @@ export function Checkout() {
                             ): (
                                 <p>não ha nenhum item na lista</p>
                             )}
-                              <CoffeeTotalAmount>
+                            {cart.length > 0 && (
+                                 <CoffeeTotalAmount>
                                     <div>
                                         <span>Total de itens</span>
-                                        <span>R$ {formatAmount(sumAllValues)}</span>
+                                        <span>R$ {formatAmount(totalCart)}</span>
                                     </div>
                                     <div>
                                         <span>Entrega</span>
-                                        <span>{totalWithDelivery > 100 ? 'Entrega grátis' : `R$ 3,50`}</span>
+                                        <span>{totalCartHasFreeShipping}</span>
                                     </div>
                                     <div>
                                         <span><strong>Total</strong></span>
-                                        <span>R${totalWithDelivery > 100 ? formatAmount(sumAllValues) : formatAmount(totalWithDelivery)}</span>
+                                        <span>R${showAmountTotalCart}</span>
                                     </div>
                                     <p>Entre grátis acima de 100*</p>
-                                </CoffeeTotalAmount>
-                            <CloseOrder type="submit" disabled={cart.length > 0 ? false: true}>Confirmar perdido</CloseOrder>
+                                 </CoffeeTotalAmount>
+                            )}
+                             
+                            <CloseOrder type="submit" disabled={!cart.length}>Confirmar perdido</CloseOrder>
                         </CoffeeDisplayList>
                     </CoffeeDisplayContainer>
                 </CoffeeDisplay>

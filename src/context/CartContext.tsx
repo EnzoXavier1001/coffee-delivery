@@ -4,14 +4,14 @@ import { coffeeData } from "../data/coffeeData";
 import { toast } from 'react-toastify';
 
 interface CartContextType {
-    coffee: ICoffee[],
+    coffeeList: ICoffee[],
     cart: ICoffee[],
-    handleIncreaseToCart: (id: string) => void
-    handleDecreaseToCart: (id: string) => void
+    handleIncreaseCart: (id: string) => void
+    handleDecreaseCart: (id: string) => void
     handleSaveCart: (data: ICoffee) => void
-    handleAddToCart: (id: string) => void
-    handleRemoveAllProducts: (id: string) => void
-    handleDeleteToCart: (id: string) => void
+    handleAddCartQuantity: (id: string) => void
+    handleRemoveCartQuantity: (id: string) => void
+    handleDeleteCoffee: (id: string) => void
 }
 
 interface CartContextProviderProps {
@@ -21,7 +21,7 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-    const [coffee, setCoffee] = useState<ICoffee[]>(coffeeData)
+    const [coffeeList, setCoffeeList] = useState<ICoffee[]>(coffeeData)
     const [cart, setCart] = useState<ICoffee[]>([])
 
     useEffect(() => {
@@ -38,8 +38,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         }
     }, [cart]);
 
-    function handleIncreaseToCart(id: string) {
-        const newList = coffee.map(item => {
+    function handleIncreaseCart(id: string) {
+        const newList = coffeeList.map(item => {
             if(item.id === id) {
                 if(!item.quantity) {
                     const list = { ...item, quantity: 1}
@@ -52,11 +52,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
             return item
         })
 
-        setCoffee([...newList])
+        setCoffeeList([...newList])
     }
 
-    function handleDecreaseToCart(id: string) {
-        const newList = coffee.map(item => {
+    function handleDecreaseCart(id: string) {
+        const newList = coffeeList.map(item => {
             if(item.id === id) {
                 if(item.quantity) {
                     const list = { ...item, quantity: item.quantity - 1}
@@ -66,41 +66,30 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
             return item
         })
 
-        setCoffee([...newList])
+        setCoffeeList([...newList])
     }
 
-    async function handleSaveCart(data: ICoffee) {
-        const coffeeExistsInCart = cart.findIndex(cartItem => cartItem.id === data.id)
+    async function handleSaveCart(coffee: ICoffee) {
+        const coffeeExistsInCart = cart.findIndex(cartItem => cartItem.id === coffee.id)
 
-        if(cart.length > 0) {
-            if(coffeeExistsInCart !== -1) {
-                const newCart = [...cart]
-                newCart[coffeeExistsInCart].quantity = data.quantity
-                localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(newCart))
-                setCart([...newCart])
-            } else {
-                const newCart = [...cart, data]
-                localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(newCart))
-                setCart(newCart)
-            }
+        if(coffeeExistsInCart !== -1) {
+            const newCart = [...cart]
+            newCart[coffeeExistsInCart].quantity = coffee.quantity
+            setCart([...newCart])
         } else {
-            const newCart = [...cart, data]
-            localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(newCart))
-            setCart(newCart)
+            setCart((prevState) => [...prevState, coffee])
         }
 
         toast.success('Item adicionado ao carrinho com sucesso')
     }
 
-    function handleAddToCart(id: string) {
+    function handleAddCartQuantity(id: string) {
         const newList = cart.map(item => {
             if(item.id === id) {
                 if(!item.quantity) {
-                    const list = { ...item, quantity: 1}
-                    return list
+                    return { ...item, quantity: 1}
                 } else {
-                    const list = { ...item, quantity: item.quantity + 1}
-                    return list
+                    return { ...item, quantity: item.quantity + 1}
                 }
             }
             return item
@@ -109,21 +98,18 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         setCart([...newList])
     }
 
-    function handleDeleteToCart(id: string) {
+    function handleRemoveCartQuantity(id: string) {
         const newList = cart.map(item => {
             if(item.id === id) {
-                if(item.quantity) {
-                    return { ...item, quantity: item.quantity - 1}
-                } 
+                return { ...item, quantity: item.quantity! - 1}
             }
             return item
         })
 
-
         setCart([...newList])
     }
 
-    function handleRemoveAllProducts(id: string) {
+    function handleDeleteCoffee(id: string) {
         const newList = cart.filter(item => {
             return item.id !== id
         })
@@ -134,13 +120,13 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     return (
         <CartContext.Provider value={{
            cart,
-           coffee,
-           handleDecreaseToCart,
-           handleRemoveAllProducts,
-           handleAddToCart,
-           handleDeleteToCart,
+           coffeeList,
+           handleIncreaseCart,
+           handleDecreaseCart,
+           handleAddCartQuantity,
+           handleRemoveCartQuantity,
+           handleDeleteCoffee,
            handleSaveCart,
-           handleIncreaseToCart,
         }}>
             {children}
         </CartContext.Provider>

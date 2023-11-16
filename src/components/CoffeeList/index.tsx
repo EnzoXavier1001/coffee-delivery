@@ -4,15 +4,21 @@ import { Card } from "../Card";
 import { CartContext } from "../../context/CartContext";
 
 export function CoffeeList() {
-    const { coffee, handleIncreaseToCart, handleSaveCart, handleDecreaseToCart} = useContext(CartContext)
+    const { coffeeList, handleIncreaseCart, handleSaveCart, handleDecreaseCart} = useContext(CartContext)
 
     return (
         <CoffeeListContainer>
             <CoffeeListTitle>Nossos cafés</CoffeeListTitle>
 
             <CardList>
-                {coffee.map((coffeeItem) => (
-                    <Card onSaveCart={handleSaveCart} onDeleteCart={handleDecreaseToCart} onAddCart={handleIncreaseToCart} key={coffeeItem.id} coffeeData={coffeeItem} />
+                {coffeeList.map((coffee) => (
+                    <Card 
+                        key={coffee.id} 
+                        coffee={coffee} 
+                        onSaveCart={handleSaveCart} 
+                        onDeleteCart={handleDecreaseCart} 
+                        onAddCart={handleIncreaseCart} 
+                    />
                 ))}
             </CardList>
         </CoffeeListContainer>

@@ -2,7 +2,7 @@ import { Bank, CreditCard, CurrencyDollar, MapPinLine, Minus, Money, Plus, Trash
 import { ButtonPayment, ButtonRemove, ButtonWrapper, ButtonsWrapper, CardDivider, CheckoutContainer, CloseOrder, CoffeeCard, CoffeeCardWrapper, CoffeeDisplay, CoffeeDisplayContainer, CoffeeDisplayList, CoffeeTotalAmount, FormCheckout, FormCheckoutStyles, FormGroup, FormPayment, FormWrapper } from "./styles";
 import { useForm } from "react-hook-form";
 import * as zod from 'zod'
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { formatAmount } from "../../utils/formatAmount";
@@ -16,6 +16,7 @@ const CheckoutFormValidationSchema = zod.object({
     district: zod.string(),
     city: zod.string(),
     uf: zod.string(),
+    formPayment: zod.string()
 })
 
 type CheckoutFormData = zod.infer<typeof CheckoutFormValidationSchema>
@@ -24,11 +25,48 @@ export function Checkout() {
     const navigate = useNavigate()
     const { cart, handleAddCartQuantity, handleDeleteCoffee, handleRemoveCartQuantity} = useContext(CartContext)
     const { register, handleSubmit, reset } = useForm<CheckoutFormData>()
+    const [isActive, setIsActive] = useState({
+        creditCard: true,
+        debitCard: false,
+        money: false,
+    })
 
     const totalCart: number = cart.reduce((prevCart, cartItem) => {
         const itemTotal = cartItem.amount * cartItem.quantity!;
         return prevCart + itemTotal;
     }, 0);
+
+    function handleUpdateFormPayment(payment: string) {
+        switch(payment) {
+            case 'creditCard':
+                setIsActive({
+                    creditCard: true,
+                    debitCard: false,
+                    money: false
+                })
+                break
+            case 'debitCard':
+                setIsActive({
+                    creditCard: false,
+                    debitCard: true,
+                    money: false
+                })
+            break
+            case 'money':
+                setIsActive({
+                    creditCard: false,
+                    debitCard: false,
+                    money: true
+                })
+            break
+            default:
+                setIsActive({
+                    creditCard: true,
+                    debitCard: false,
+                    money: false
+                })
+        }
+    }
 
     const totalCartWithDelivery = totalCart + 3.50
 
@@ -37,7 +75,7 @@ export function Checkout() {
     const showAmountTotalCart = totalCartWithDelivery > 100 ? formatAmount(totalCart) : formatAmount(totalCartWithDelivery)
 
     function handleCreateOrder(data: CheckoutFormData) {
-        const { cep, city, complement, district, number, street, uf } = data 
+        const { cep, city, complement, district, number, street, uf, formPayment } = data 
         const newOrder: OrderInfo = {
             address: {
                 cep, 
@@ -48,7 +86,7 @@ export function Checkout() {
                 street, 
                 uf
             },
-            formPayment: 'Cartão de Crédito'
+            formPayment
         }
         localStorage.setItem('@CoffeeDelivery:order', JSON.stringify(newOrder))
         reset()
@@ -94,16 +132,19 @@ export function Checkout() {
                         </header>
 
                         <ButtonWrapper>
-                            <ButtonPayment type="button">
-                                <CreditCard size={20} color="#557b39" weight="bold" />
+                            <ButtonPayment onClick={() => handleUpdateFormPayment('creditCard')} $isPaymentActive={isActive.creditCard} type="button">
+                                <input  type="radio" {...register('formPayment')} name="formPayment" id="creditCard" value="Cartão de Crédito" />
+                                <CreditCard id="creditCard" size={20} color="#557b39" weight="bold" />
                                 Cartão de crédito
                             </ButtonPayment>
-                            <ButtonPayment type="button">
-                                <Bank size={20} color="#557b39" weight="bold" />
+                            <ButtonPayment onClick={() => handleUpdateFormPayment('debitCard')} $isPaymentActive={isActive.debitCard} type="button">
+                                <input type="radio" {...register('formPayment')} name="formPayment" id="debitCard" value="Cartão de Débito" />
+                                <Bank id="debitCard" size={20} color="#557b39" weight="bold" />
                                 Cartão de débito
                             </ButtonPayment>
-                            <ButtonPayment type="button">
-                                <Money size={20} color="#557b39" weight="bold" />
+                            <ButtonPayment onClick={() => handleUpdateFormPayment('money')} $isPaymentActive={isActive.money} type="button">
+                                <input type="radio" {...register('formPayment')} name="formPayment" id="money" value="Dinheiro" />
+                                <Money id="money"  size={20} color="#557b39" weight="bold" />
                                 Dinheiro
                             </ButtonPayment>
                         </ButtonWrapper>

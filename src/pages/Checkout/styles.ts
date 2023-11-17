@@ -112,6 +112,10 @@ export const CloseOrder = styled.button`
     &:hover {
         filter: brightness(0.9);
     }
+
+    &:disabled {
+        opacity: 0.6;
+    }
 `
 
 export const FormGroup = styled.div`
@@ -133,10 +137,15 @@ export const ButtonWrapper = styled.div`
     }
 `
 
-export const ButtonPayment = styled.button`
+export const ButtonPayment = styled.label<{ $isPaymentActive: boolean }>`
     display: flex;
     align-items: center;
     gap: 1.5rem;
+
+    input[type="radio"] {
+        width: 0;
+        height: 0;
+    }
 
     cursor: pointer;
     border: 0;
@@ -151,13 +160,16 @@ export const ButtonPayment = styled.button`
     padding: 1.6rem;
     border-radius: 6px;
 
-    background: ${props => props.theme['--base-button']};
+    border: ${props => props.$isPaymentActive ? `1px ${props.theme['--purple-600']} solid` : `1px ${props.theme['--base-button']} solid`};
+
+    background: ${props => props.$isPaymentActive ? props.theme['--purple-300'] : props.theme['--base-button']};
 
     transition: background 0.3s;
 
     &:hover {
-        background: ${props => props.theme['--base-hover']}
+        background: ${props => props.$isPaymentActive ? '' : props.theme['--base-hover']}
     }
+
 `
 
 export const CoffeeDisplayContainer = styled(BaseCardLayout)``

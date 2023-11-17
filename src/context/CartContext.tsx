@@ -36,6 +36,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         if(cart.length > 0) {
             localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(cart));
         }
+
     }, [cart]);
 
     function handleIncreaseCart(id: string) {
@@ -108,7 +109,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
             return item
         })
 
-        setCart([...newList])
+        const filteredList = newList.filter((coffee => {
+            return coffee.quantity !== 0
+        }))
+
+        setCart([...filteredList])
     }
 
     function handleDeleteCoffee(id: string) {

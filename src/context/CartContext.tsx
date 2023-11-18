@@ -1,7 +1,9 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useReducer } from "react";
 import { ICoffee } from "../@types/Coffee";
 import { coffeeData } from "../data/coffeeData";
 import { toast } from 'react-toastify';
+import { coffeeReducer } from "../reducers/coffee/reducer";
+import { addCartQuantity, decreaseNewValueCart, deleteCoffee, increaseNewValueCart, loadAllCart, removeCartQuantity, saveCart } from "../reducers/coffee/actions";
 
 interface CartContextType {
     coffeeList: ICoffee[],
@@ -21,113 +23,53 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-    const [coffeeList, setCoffeeList] = useState<ICoffee[]>(coffeeData)
-    const [cart, setCart] = useState<ICoffee[]>([])
+    const [coffee, dispatch] = useReducer(coffeeReducer, {
+        coffeeList: coffeeData,
+        cart: []
+    },
+    )
+    const { coffeeList, cart } = coffee;
 
     useEffect(() => {
-        const coffeeStored = JSON.parse(localStorage.getItem('@CoffeeDelivery:cart')!)
-
-        if(coffeeStored) {
-            setCart(coffeeStored)
-        } 
-    }, [])
+       dispatch(loadAllCart())
+    }, []);
 
     useEffect(() => {
-        if(cart.length > 0) {
-            localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(cart));
+        if(cart.length > 0 ) {
+            localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(cart))
         }
-
-    }, [cart]);
+    }, [cart])
 
     function handleIncreaseCart(id: string) {
-        const newList = coffeeList.map(item => {
-            if(item.id === id) {
-                if(!item.quantity) {
-                    const list = { ...item, quantity: 1}
-                    return list
-                } else {
-                    const list = { ...item, quantity: item.quantity + 1}
-                    return list
-                }
-            }
-            return item
-        })
-
-        setCoffeeList([...newList])
+        dispatch(increaseNewValueCart(id))
     }
 
     function handleDecreaseCart(id: string) {
-        const newList = coffeeList.map(item => {
-            if(item.id === id) {
-                if(item.quantity) {
-                    const list = { ...item, quantity: item.quantity - 1}
-                    return list
-                }
-            }
-            return item
-        })
-
-        setCoffeeList([...newList])
+        dispatch(decreaseNewValueCart(id))
     }
 
     async function handleSaveCart(coffee: ICoffee) {
-        const coffeeExistsInCart = cart.findIndex(cartItem => cartItem.id === coffee.id)
-
-        if(coffeeExistsInCart !== -1) {
-            const newCart = [...cart]
-            newCart[coffeeExistsInCart].quantity = coffee.quantity
-            setCart([...newCart])
-        } else {
-            setCart((prevState) => [...prevState, coffee])
-        }
+        dispatch(saveCart(coffee))
 
         toast.success('Item adicionado ao carrinho com sucesso')
     }
 
     function handleAddCartQuantity(id: string) {
-        const newList = cart.map(item => {
-            if(item.id === id) {
-                if(!item.quantity) {
-                    return { ...item, quantity: 1}
-                } else {
-                    return { ...item, quantity: item.quantity + 1}
-                }
-            }
-            return item
-        })
-
-        setCart([...newList])
+        dispatch(addCartQuantity(id))
     }
 
     function handleRemoveCartQuantity(id: string) {
-        const newList = cart.map(item => {
-            if(item.id === id) {
-                if(item.quantity! > 0) {
-                    return { ...item, quantity: item.quantity! - 1}
-                }
-            }
-            return item
-        })
-
-        const filteredList = newList.filter((coffee => {
-            return coffee.quantity !== 0
-        }))
-
-        setCart([...filteredList])
+        dispatch(removeCartQuantity(id))
     }
 
     function handleDeleteCoffee(id: string) {
-        const newList = cart.filter(item => {
-            return item.id !== id
-        })
-
-        setCart([...newList])
+        dispatch(deleteCoffee(id))
     }
    
     return (
         <CartContext.Provider value={{
-           cart,
            coffeeList,
+           cart,
            handleIncreaseCart,
            handleDecreaseCart,
            handleAddCartQuantity,

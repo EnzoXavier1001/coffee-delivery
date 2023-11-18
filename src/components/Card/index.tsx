@@ -39,7 +39,7 @@ export function Card({ coffee, onAddCart, onDeleteCart, onSaveCart }: CardProps)
                             <button onClick={() => onDeleteCart(coffee.id)}>
                                 <Minus size={16} color="#8047F8" weight="bold" />
                             </button>
-                            <span>{coffee.quantity ? coffee.quantity : 0}</span>
+                            <span>{coffee.quantity ?? 1}</span>
                             <button onClick={() => onAddCart(coffee.id)}>
                                 <Plus size={16} color="#8047F8" weight="bold" />
                             </button>

@@ -1,10 +1,10 @@
-import { Bank, CreditCard, CurrencyDollar, MapPinLine, Minus, Money, Plus, Trash } from "@phosphor-icons/react";
 import { ButtonPayment, ButtonRemove, ButtonWrapper, ButtonsWrapper, CardDivider, CheckoutContainer, CloseOrder, CoffeeCard, CoffeeCardWrapper, CoffeeDisplay, CoffeeDisplayContainer, CoffeeDisplayList, CoffeeTotalAmount, FormCheckout, FormCheckoutStyles, FormGroup, FormPayment, FormWrapper } from "./styles";
-import { useForm } from "react-hook-form";
+import { Bank, CreditCard, CurrencyDollar, MapPinLine, Minus, Money, Plus, Trash } from "@phosphor-icons/react";
 import * as zod from 'zod'
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
-import { useNavigate } from "react-router-dom";
 import { formatAmount } from "../../utils/formatAmount";
 import { OrderInfo } from "../Success";
 
@@ -21,11 +21,17 @@ const CheckoutFormValidationSchema = zod.object({
 
 type CheckoutFormData = zod.infer<typeof CheckoutFormValidationSchema>
 
+interface formPayment {
+    creditCard: boolean
+    debitCard: boolean
+    money: boolean
+}
+
 export function Checkout() {
     const navigate = useNavigate()
     const { cart, handleAddCartQuantity, handleDeleteCoffee, handleRemoveCartQuantity} = useContext(CartContext)
     const { register, handleSubmit, reset } = useForm<CheckoutFormData>()
-    const [isActive, setIsActive] = useState({
+    const [isActive, setIsActive] = useState<formPayment>({
         creditCard: true,
         debitCard: false,
         money: false,
@@ -35,6 +41,7 @@ export function Checkout() {
         const itemTotal = cartItem.amount * cartItem.quantity!;
         return prevCart + itemTotal;
     }, 0);
+
 
     function handleUpdateFormPayment(payment: string) {
         switch(payment) {

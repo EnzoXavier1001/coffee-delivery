@@ -48,7 +48,6 @@ export const SucessInfoGroup = styled.div`
     flex-wrap: wrap;
     flex-direction: column;
     gap: 3.2rem;
-    border: 1px solid red;
     padding: 4.0rem;
 
     div {
@@ -61,6 +60,28 @@ export const SucessInfoGroup = styled.div`
     @media (max-width: 1200px) {
         order: 2;
     }
+
+    position: relative;
+	background: #fff;
+
+	/*The background extends to the outside edge of the padding. No background is drawn beneath the border.*/
+	background-clip: padding-box;
+
+	border: solid 1px transparent;
+	border-radius: 6px 36px 6px 36px;
+
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+		margin: -1px; /* same as border width */
+		border-radius: inherit; /* inherit container box's radius */
+		background: linear-gradient(to left, #8047F8, #DBAC2C);
+	}
 
 `
 

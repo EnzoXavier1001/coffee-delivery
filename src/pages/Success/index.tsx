@@ -38,7 +38,7 @@ export function Success() {
                         <SuccessIcon $background="#8047F8">
                             <MapPin size={20} color="#fff" weight="fill" />
                         </SuccessIcon>
-                        <span>Entrega em {`${orderInfo?.address?.street}, ${orderInfo?.address?.number}`} <br /> {`${orderInfo?.address?.district} - ${orderInfo?.address?.city}, ${orderInfo?.address?.uf.toUpperCase()}`}</span>
+                        <span>Entrega em <strong>{`${orderInfo?.address?.street}, ${orderInfo?.address?.number}`}</strong> <br /> {`${orderInfo?.address?.district} - ${orderInfo?.address?.city}, ${orderInfo?.address?.uf.toUpperCase()}`}</span>
                     </div>
                     <div>
                         <SuccessIcon $background="#DBAC2C">

@@ -19,6 +19,12 @@ export const FormWrapper = styled.div`
     flex-direction: column;
     gap: 1.2rem;
 
+    h2 {
+        color: ${props => props.theme['--base-subtitle']};
+        font-size: 2.0rem;
+        font-weight: 600;
+    }
+
     @media (max-width: 1170px) {
         flex: 1;
         width: 100%;
@@ -81,6 +87,12 @@ export const CoffeeDisplay = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    
+    h2 {
+        color: ${props => props.theme['--base-subtitle']};
+        font-size: 2.0rem;
+        font-weight: 600;
+    }
 
     @media (max-width: 1170px) {
         width: 100%;
@@ -172,7 +184,9 @@ export const ButtonPayment = styled.label<{ $isPaymentActive: boolean }>`
 
 `
 
-export const CoffeeDisplayContainer = styled(BaseCardLayout)``
+export const CoffeeDisplayContainer = styled(BaseCardLayout)`
+    border-radius: 6px 44px 6px 44px;
+`
 
 export const CoffeeDisplayList = styled.div`
     display: flex;

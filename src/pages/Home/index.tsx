@@ -4,6 +4,7 @@ import coffeeMainImage from '../../assets/coffee-main.png'
 import { CoffeeList } from "../../components/CoffeeList";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify'
+import { Footer } from "../../components/Footer";
 
 export function Home() {
     return (
@@ -45,6 +46,7 @@ export function Home() {
                 </HomeSection>
             </HomeContainer>
             <CoffeeList />
+            <Footer />
             <ToastContainer />
         </>
     )

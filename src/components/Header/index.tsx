@@ -9,7 +9,7 @@ export function Header() {
     const { cart } = useContext(CartContext)
 
     return (
-        <HeaderContainer>
+        <HeaderContainer id="header">
             <NavLink to="/">
                 <img src={logoCoffeeDelivery} alt="Logo Coffee Delivery" />
             </NavLink>

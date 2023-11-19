@@ -1,11 +1,12 @@
 import { ICoffee } from "../../@types/Coffee";
 import { ActionTypes } from "./actions";
 
-interface CoffeeState {
+export interface CoffeeState {
     coffeeList: ICoffee[]
     cart: ICoffee[]
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function coffeeReducer(state: CoffeeState, action: any) {
     switch(action.type) {
         case ActionTypes.LOAD_CART: {
@@ -58,7 +59,7 @@ export function coffeeReducer(state: CoffeeState, action: any) {
             
                     return { ...state, cart: newCart };
                 } else {
-                    return { ...state, cart: [...state.cart, { ...action.payload.coffee }] };
+                    return { ...state, cart: [...state.cart, { ...action.payload.coffee, quantity: 1 }] };
                 }
             }
             case ActionTypes.ADD_CART_QUANTITY: 

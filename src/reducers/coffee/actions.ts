@@ -12,7 +12,7 @@ export enum ActionTypes {
 
 export function loadAllCart() {
     return {
-         type: ActionTypes.LOAD_CART
+         type: ActionTypes.LOAD_CART,
     }
 }
 

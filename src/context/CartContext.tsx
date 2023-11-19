@@ -2,7 +2,7 @@ import { ReactNode, createContext, useEffect, useReducer } from "react";
 import { ICoffee } from "../@types/Coffee";
 import { coffeeData } from "../data/coffeeData";
 import { toast } from 'react-toastify';
-import { coffeeReducer } from "../reducers/coffee/reducer";
+import { CoffeeState, coffeeReducer } from "../reducers/coffee/reducer";
 import { addCartQuantity, decreaseNewValueCart, deleteCoffee, increaseNewValueCart, loadAllCart, removeCartQuantity, saveCart } from "../reducers/coffee/actions";
 
 interface CartContextType {
@@ -23,11 +23,12 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextType)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-    const [coffee, dispatch] = useReducer(coffeeReducer, {
+    const initialCoffeeState: CoffeeState = {
         coffeeList: coffeeData,
-        cart: []
-    },
-    )
+        cart: [],
+      };
+
+    const [coffee, dispatch] = useReducer(coffeeReducer, initialCoffeeState)
     const { coffeeList, cart } = coffee;
 
     useEffect(() => {
@@ -35,9 +36,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     }, []);
 
     useEffect(() => {
-        if(cart.length > 0 ) {
+        if(cart) {
             localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(cart))
         }
+
     }, [cart])
 
     function handleIncreaseCart(id: string) {

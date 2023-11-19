@@ -13,23 +13,7 @@ export const CheckoutContainer = styled.main`
    }
 `
 
-export const FormWrapper = styled.div`
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
 
-    h2 {
-        color: ${props => props.theme['--base-subtitle']};
-        font-size: 2.0rem;
-        font-weight: 600;
-    }
-
-    @media (max-width: 1170px) {
-        flex: 1;
-        width: 100%;
-    }
-`
 
 export const BaseCardLayout = styled.div`
     background: ${props => props.theme['--base-card']};
@@ -54,22 +38,7 @@ export const BaseCardLayout = styled.div`
     }
 `
 
-export const FormCheckoutStyles = styled(BaseCardLayout)`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
 
-    input {
-        outline: none;
-        background: ${props => props.theme['--base-input']};
-        border: none;
-        padding: 1.2rem;
-        border-radius: 6px;
-        color: ${props => props.theme['--base-text']};
-        margin-bottom: 1.8rem;
-    }
-
-`
 
 export const FormCheckout = styled.form`
     display: flex;
@@ -99,9 +68,6 @@ export const CoffeeDisplay = styled.div`
     }
 `
 
-export const FormPayment = styled(BaseCardLayout)`
-    width: 100%;
-`
 
 export const CloseOrder = styled.button`
     outline: 0;
@@ -127,25 +93,6 @@ export const CloseOrder = styled.button`
 
     &:disabled {
         opacity: 0.6;
-    }
-`
-
-export const FormGroup = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-    
-    input {
-        flex: 1;
-    }
-`
-
-export const ButtonWrapper = styled.div`
-    display: flex;
-    gap: 1.2rem;
-    
-    @media (max-width: 555px) {
-        flex-direction: column;
     }
 `
 
@@ -298,5 +245,17 @@ export const ButtonRemove = styled.button`
 
     &:hover {
         filter: brightness(0.8);
+    }
+`
+
+export const EmptyList = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4rem;
+
+    img {
+        width: 20rem;
     }
 `

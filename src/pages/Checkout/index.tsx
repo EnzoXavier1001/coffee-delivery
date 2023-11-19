@@ -139,17 +139,17 @@ export function Checkout() {
                         </header>
 
                         <ButtonWrapper>
-                            <ButtonPayment onClick={() => handleUpdateFormPayment('creditCard')} $isPaymentActive={isActive.creditCard} type="button">
+                            <ButtonPayment onClick={() => handleUpdateFormPayment('creditCard')} $isPaymentActive={isActive.creditCard}>
                                 <input  type="radio" {...register('formPayment')} name="formPayment" id="creditCard" value="Cartão de Crédito" />
                                 <CreditCard id="creditCard" size={20} color="#557b39" weight="bold" />
                                 Cartão de crédito
                             </ButtonPayment>
-                            <ButtonPayment onClick={() => handleUpdateFormPayment('debitCard')} $isPaymentActive={isActive.debitCard} type="button">
+                            <ButtonPayment onClick={() => handleUpdateFormPayment('debitCard')} $isPaymentActive={isActive.debitCard}>
                                 <input type="radio" {...register('formPayment')} name="formPayment" id="debitCard" value="Cartão de Débito" />
                                 <Bank id="debitCard" size={20} color="#557b39" weight="bold" />
                                 Cartão de débito
                             </ButtonPayment>
-                            <ButtonPayment onClick={() => handleUpdateFormPayment('money')} $isPaymentActive={isActive.money} type="button">
+                            <ButtonPayment onClick={() => handleUpdateFormPayment('money')} $isPaymentActive={isActive.money}>
                                 <input type="radio" {...register('formPayment')} name="formPayment" id="money" value="Dinheiro" />
                                 <Money id="money"  size={20} color="#557b39" weight="bold" />
                                 Dinheiro
@@ -174,11 +174,11 @@ export function Checkout() {
                                                     </header>
                                                     <ButtonsWrapper>
                                                         <div>
-                                                            <button onClick={() => handleRemoveCartQuantity(cartItem.id)} type="button"><Minus size={14} color="#8047F8" weight="bold" /></button>
+                                                            <button onClick={() => handleRemoveCartQuantity(cartItem.id)}><Minus size={14} color="#8047F8" weight="bold" /></button>
                                                             <span>{cartItem.quantity}</span>
-                                                            <button onClick={() => handleAddCartQuantity(cartItem.id)} type="button"><Plus size={14} color="#8047F8" weight="bold" /></button>
+                                                            <button onClick={() => handleAddCartQuantity(cartItem.id)}><Plus size={14} color="#8047F8" weight="bold" /></button>
                                                         </div>
-                                                        <ButtonRemove onClick={() => handleDeleteCoffee(cartItem.id)} type="button"><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
+                                                        <ButtonRemove onClick={() => handleDeleteCoffee(cartItem.id)}><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
                                                     </ButtonsWrapper>
                                                 </CoffeeCardWrapper>
                                             </CoffeeCard>
@@ -187,7 +187,7 @@ export function Checkout() {
                                     </div>
                                 ))
                             ): (
-                                <p>não ha nenhum item na lista</p>
+                                <p>Não ha nenhum item na lista</p>
                             )}
                             {cart.length > 0 && (
                                  <CoffeeTotalAmount>

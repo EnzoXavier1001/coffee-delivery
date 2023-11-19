@@ -3,14 +3,14 @@ import { ActionTypes } from "./actions";
 
 export interface CoffeeState {
     coffeeList: ICoffee[]
-    cart: ICoffee[] 
+    cart: ICoffee[] | []
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function coffeeReducer(state: CoffeeState, action: any) {
     switch(action.type) {
         case ActionTypes.LOAD_CART: {
-            const storedCart = JSON.parse(localStorage.getItem('@CoffeeDelivery:cart')!);
+            const storedCart = JSON.parse(localStorage.getItem('@CoffeeDelivery:cart')!) || [];
             return { ...state, cart: storedCart };
         }
         case ActionTypes.INCREASE_CART:
@@ -31,21 +31,19 @@ export function coffeeReducer(state: CoffeeState, action: any) {
         case ActionTypes.DECREASE_CART:
             {
                 const updatedList = state.coffeeList.map(coffee => {
-                    if (coffee.id === action.payload.id && coffee.quantity! > 0) {
-                        const updatedCoffee = {
-                            ...coffee,
-                            quantity: coffee.quantity! - 1
-                        };
-                        return updatedCoffee;
+                    if (coffee.id === action.payload.id && coffee.quantity! > 1) {
+                            const updatedCoffee = {
+                                ...coffee,
+                                quantity: coffee.quantity! - 1
+                            };
+                            return updatedCoffee;
                     }
                     return coffee;
                 });
-
                 return { ...state, coffeeList: updatedList };
             }
             case ActionTypes.SAVE_CART: {
                 const coffeeExistsInCart = state.cart.find(cartItem => cartItem.id === action.payload.coffee.id);
-            
                 if (coffeeExistsInCart) {
                     const newCart = state.cart.map(cartItem => {
                         if (cartItem.id === action.payload.coffee.id) {
@@ -63,7 +61,7 @@ export function coffeeReducer(state: CoffeeState, action: any) {
             
                     return { ...state, cart: newCart };
                 } else {
-                    return { ...state, cart: [...state.cart, { ...action.payload.coffee }] };
+                    return { ...state, cart: [...state.cart, { ...action.payload.coffee, quantity: 1 }] };
                 }
             }
             case ActionTypes.ADD_CART_QUANTITY: 

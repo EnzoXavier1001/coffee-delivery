@@ -3,7 +3,7 @@ import { ICoffee } from "../@types/Coffee";
 const isLocalEnvironment = import.meta.env.MODE === 'development';
 
 const buildImagePath = (imageName: string) => {
-  return isLocalEnvironment ? `/src/assets/${imageName}` : `/assets/${imageName}`;
+  return isLocalEnvironment ? `/src/assets/${imageName}` : `https://raw.githubusercontent.com/EnzoXavier1001/coffee-delivery/main/src/assets/${imageName}`;
 };
 
 export const coffeeData: ICoffee[] = [

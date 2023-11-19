@@ -61,7 +61,7 @@ export function coffeeReducer(state: CoffeeState, action: any) {
             
                     return { ...state, cart: newCart };
                 } else {
-                    return { ...state, cart: [...state.cart, { ...action.payload.coffee, quantity: 1 }] };
+                    return { ...state, cart: [...state.cart, { ...action.payload.coffee, quantity: action.payload.coffee.quantity ?? 1 }] };
                 }
             }
             case ActionTypes.ADD_CART_QUANTITY: 

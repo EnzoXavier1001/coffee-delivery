@@ -3,7 +3,7 @@ export interface ICoffee {
     name: string
     description: string
     tags: string[]
-    amount: number
+    price: number
     img: string
     quantity?: number
 }

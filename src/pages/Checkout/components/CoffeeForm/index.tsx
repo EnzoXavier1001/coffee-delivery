@@ -3,6 +3,10 @@ import { FormWrapper, FormCheckoutStyles, ButtonWrapper, FormGroup, FormPayment 
 import { ButtonPayment } from "../../styles";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
+import { api } from "../../../../services/apiCep";
+import axios  from "axios";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
 
 interface formPayment {
     creditCard: boolean
@@ -10,13 +14,43 @@ interface formPayment {
     money: boolean
 }
 
+interface APICep {
+    data: {
+        cep: string
+        city: string
+        neighborhood: string
+        service: string
+        state: string
+        street: string
+    }
+}
+
 export function CoffeeForm() {
-    const { register } = useFormContext()
+    const { register, setValue } = useFormContext()
     const [isActive, setIsActive] = useState<formPayment>({
         creditCard: true,
         debitCard: false,
         money: false,
     })
+
+    async function getCep(cep: string) {
+        try {
+            const { data }: APICep  = await api.get(`/${cep}`)
+
+            setValue('street', data.street)
+            setValue('district', data.neighborhood)
+            setValue('city', data.city)
+            setValue('uf', data.state)
+
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response?.data?.errors?.length) {
+                const errorMessage = error.response.data.errors[0].message;
+                throw new Error(errorMessage);
+            } else {
+                throw new Error('Erro desconhecido ao obter o CEP.');
+            }
+        }
+    }
 
     function handleUpdateFormPayment(payment: string) {
         switch(payment) {
@@ -62,7 +96,9 @@ export function CoffeeForm() {
                             </div>
                         </header>
 
-                        <input type="text" placeholder="CEP" {...register("cep")} required />
+                        <input type="text" placeholder="CEP" {...register("cep", { onBlur(event) {
+                            getCep(event.target.value)
+                        },})} required />
 
                         <input type="text" placeholder="Rua" {...register("street")} required  />
 
@@ -104,6 +140,7 @@ export function CoffeeForm() {
                             </ButtonPayment>
                         </ButtonWrapper>
                     </FormPayment>
+                    <ToastContainer />
                 </FormWrapper>
     )
 }

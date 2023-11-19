@@ -20,7 +20,7 @@ export function Header() {
                 </CurrentLocation>
                 <NavLink to="/checkout">
                     <ShoppingCart size={24} weight="fill" color="#C47F17" />
-                    <CartCounter>
+                    <CartCounter title="Quantidade de items no carrinho">
                         {cart ? cart.length : 0}
                     </CartCounter>
                 </NavLink>

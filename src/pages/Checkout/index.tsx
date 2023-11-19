@@ -54,7 +54,6 @@ export function Checkout() {
     const showAmountTotalCart = totalCartWithDelivery > 100 ? formatAmount(totalCart) : formatAmount(totalCartWithDelivery)
 
     function handleCreateOrder(data: CheckoutFormData) {
-        console.log(data)
         const { cep, city, complement, district, number, street, uf, formPayment } = data 
         const newOrder: OrderInfo = {
             address: {

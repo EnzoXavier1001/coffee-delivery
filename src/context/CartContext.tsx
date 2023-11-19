@@ -36,10 +36,9 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     }, []);
 
     useEffect(() => {
-        if(cart) {
+        if(cart && cart.length > 0) {
             localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(cart))
         }
-
     }, [cart])
 
     function handleIncreaseCart(id: string) {

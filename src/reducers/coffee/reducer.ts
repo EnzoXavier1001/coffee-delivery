@@ -3,7 +3,7 @@ import { ActionTypes } from "./actions";
 
 export interface CoffeeState {
     coffeeList: ICoffee[]
-    cart: ICoffee[]
+    cart: ICoffee[] 
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,16 +50,20 @@ export function coffeeReducer(state: CoffeeState, action: any) {
                     const newCart = state.cart.map(cartItem => {
                         if (cartItem.id === action.payload.coffee.id) {
                             const coffeeFromList = state.coffeeList.find(item => item.id === action.payload.coffee.id);
-                            const newQuantity = coffeeFromList?.quantity || 1;
-            
-                            return { ...cartItem, quantity: newQuantity };
+                            const newQuantity = coffeeFromList?.quantity;
+
+                            if(newQuantity) {
+                                return { ...cartItem, quantity: newQuantity };
+                            } else {
+                                return { ...cartItem, quantity: 1 };
+                            }
                         }
                         return cartItem;
                     });
             
                     return { ...state, cart: newCart };
                 } else {
-                    return { ...state, cart: [...state.cart, { ...action.payload.coffee, quantity: 1 }] };
+                    return { ...state, cart: [...state.cart, { ...action.payload.coffee }] };
                 }
             }
             case ActionTypes.ADD_CART_QUANTITY: 
@@ -106,5 +110,7 @@ export function coffeeReducer(state: CoffeeState, action: any) {
                 localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(newList))
                 return {...state, cart: newList}
             }
+            default:
+                return state
         }
 }

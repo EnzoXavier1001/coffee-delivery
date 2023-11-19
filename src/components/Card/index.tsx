@@ -12,7 +12,7 @@ interface CardProps {
 
 export function Card({ coffee, onAddCart, onDeleteCart, onSaveCart }: CardProps) {
     const { tags } = coffee
-    const formattedAmount = formatAmount(coffee.amount);
+    const formattedAmount = formatAmount(coffee.price);
 
     return (
         <CardContainer>

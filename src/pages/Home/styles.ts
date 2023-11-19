@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const HomeContainer = styled.main`
-    background: url('./src/assets/background.png');
+    background: url('https://raw.githubusercontent.com/EnzoXavier1001/coffee-delivery/main/src/assets/background.png');
     background-size: cover;
 
     padding: 9.4rem 0 10.8rem;

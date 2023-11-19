@@ -1,3 +1,3 @@
-export function formatAmount(amount: number) {
-    return  amount.toFixed(2).replace('.', ',')
+export function formatAmount(price: number) {
+    return price.toFixed(2).replace('.', ',')
 }

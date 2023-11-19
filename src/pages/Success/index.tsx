@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ContentWrapper, SuccessContainer, SuccessDescription, SuccessIcon, SuccessInfo, SuccessTitle, SucessInfoGroup } from "./styles";
 import successImg from '../../assets/success.png'
 import { CurrencyDollar, MapPin, Timer } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
 
 export interface OrderInfo {
     address: {
@@ -18,10 +19,17 @@ export interface OrderInfo {
 
 export function Success() {
     const [orderInfo, setOrderInfo] = useState<OrderInfo>()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const orderInfoStored = JSON.parse(localStorage.getItem('@CoffeeDelivery:order')!)
-        setOrderInfo(orderInfoStored)
+
+        if(orderInfoStored) {
+            setOrderInfo(orderInfoStored)
+        } else {
+            navigate('/')
+        }
+        
     }, [])
 
     return (

@@ -21,7 +21,7 @@ export function Header() {
                 <NavLink to="/checkout">
                     <ShoppingCart size={24} weight="fill" color="#C47F17" />
                     <CartCounter>
-                        {cart.length}
+                        {cart ? cart.length : 0}
                     </CartCounter>
                 </NavLink>
             </nav>

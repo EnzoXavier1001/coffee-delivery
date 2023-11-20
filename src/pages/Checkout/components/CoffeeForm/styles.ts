@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BaseCardLayout } from "../../styles";
 
 export const FormWrapper = styled.div`
-    flex: 3;
+    flex: 2;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
@@ -57,5 +57,25 @@ export const ButtonWrapper = styled.div`
     
     @media (max-width: 555px) {
         flex-direction: column;
+    }
+`
+
+export const FormInputComplement = styled.div`
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input {
+        width: 100%;
+    }
+
+    label {
+        position: absolute;
+        right: 4%;
+        font-style: italic;
+        margin-bottom: 1.8rem;
+        font-size: 1.2rem;
+        color: ${props => props.theme['--base-label']};
     }
 `

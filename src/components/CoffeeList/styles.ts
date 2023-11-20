@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const CoffeeListContainer = styled.section`
-    max-width: 112rem;
+    max-width: 150rem;
     margin: 3.2rem auto;
  
-    @media (max-width: 1170px) {
+    @media (max-width: 1550px) {
         width: 90%;
     }
 `

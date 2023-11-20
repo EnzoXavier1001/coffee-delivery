@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const HeaderContainer = styled.div`
     padding: 3.2rem 0;
-    max-width: 112rem;
+    max-width: 150rem;
     margin: 0 auto;
 
     display: flex;
@@ -28,7 +28,7 @@ export const HeaderContainer = styled.div`
         }
     }
 
-    @media (max-width: 1170px) {
+    @media (max-width: 1550px) {
         width: 90%;
     }
 

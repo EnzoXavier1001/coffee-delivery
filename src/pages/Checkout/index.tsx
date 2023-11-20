@@ -33,14 +33,19 @@ export function Checkout() {
             cep: '',
             street: '',
             complement: '',
-            number: 0,
             district: '',
             city: '',
             uf: '',
             formPayment: 'Cartão de Crédito'
         }
     })
-    const { handleSubmit, reset } = newUserInfo
+    const { handleSubmit, reset, watch } = newUserInfo
+
+    const formValues = watch(["city", "street", "district", "city", "uf"])
+
+    const isFormValid = formValues.every((value) => !!value);
+
+    const canSubmit = isFormValid && cart.length > 0 ? false : true
 
     const totalCart: number = cart.reduce((prevCart, cartItem) => {
         const itemTotal = cartItem.price * cartItem.quantity!;
@@ -131,7 +136,7 @@ export function Checkout() {
                                  </CoffeeTotalAmount>
                             )}
                              
-                            <CloseOrder type="submit" disabled={!cart.length}>Confirmar perdido</CloseOrder>
+                            <CloseOrder type="submit" disabled={canSubmit}>Confirmar perdido</CloseOrder>
                         </CoffeeDisplayList>
                     </CoffeeDisplayContainer>
                 </CoffeeDisplay>

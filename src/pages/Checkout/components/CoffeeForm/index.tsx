@@ -1,5 +1,5 @@
 import { MapPinLine, CurrencyDollar, CreditCard, Bank, Money } from "@phosphor-icons/react";
-import { FormWrapper, FormCheckoutStyles, ButtonWrapper, FormGroup, FormPayment } from "./styles";
+import { FormWrapper, FormCheckoutStyles, ButtonWrapper, FormGroup, FormPayment, FormInputComplement } from "./styles";
 import { ButtonPayment } from "../../styles";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
@@ -104,7 +104,10 @@ export function CoffeeForm() {
 
                         <FormGroup>
                             <input type="text" placeholder="Número" {...register("number", { valueAsNumber: true })} required/>
-                            <input type="text" placeholder="Complemento" {...register("complement")}/>
+                            <FormInputComplement>
+                                <input id="complement" type="text" placeholder="Complemento" {...register("complement")}/>
+                                <label htmlFor="complement">Opcional</label>
+                            </FormInputComplement>
                         </FormGroup>
 
                         <FormGroup>

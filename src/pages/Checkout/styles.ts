@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 export const CheckoutContainer = styled.main`
-   max-width: 112rem;
+   max-width: 150rem;
    margin: 4.0rem auto;
 
    display: flex;
    align-items: flex-start;
    gap: 3.2rem;
 
-   @media (max-width: 1170px) {
+   @media (max-width: 1550px) {
     width: 90%;
    }
 `
@@ -52,7 +52,7 @@ export const FormCheckout = styled.form`
 `
 
 export const CoffeeDisplay = styled.div`
-    flex: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -93,6 +93,7 @@ export const CloseOrder = styled.button`
 
     &:disabled {
         opacity: 0.6;
+        cursor: not-allowed;
     }
 `
 

@@ -12,7 +12,7 @@ export const HomeContainer = styled.main`
 `
 
 export const HomeSection = styled.section`
-    max-width: 112rem;
+    max-width: 150rem;
     margin: 0 auto;
 
     display: flex;
@@ -25,7 +25,7 @@ export const HomeSection = styled.section`
         gap: 2rem;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1550px) {
         width: 90%;
     }
 `

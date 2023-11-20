@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 
 export const SuccessContainer = styled.div`
-    max-width: 112rem;
+    max-width: 150rem;
     padding-top: 8.0rem;
     margin: 0 auto;
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1550px) {
         width: 90%;
     }
 `

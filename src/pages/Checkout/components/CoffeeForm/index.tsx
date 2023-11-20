@@ -127,7 +127,7 @@ export function CoffeeForm() {
 
                         <ButtonWrapper>
                             <ButtonPayment onClick={() => handleUpdateFormPayment('creditCard')} $isPaymentActive={isActive.creditCard}>
-                                <input  type="radio" {...register('formPayment')} name="formPayment" id="creditCard" value="Cartão de Crédito" />
+                                <input type="radio" {...register('formPayment')} name="formPayment" id="creditCard" value="Cartão de Crédito" />
                                 <CreditCard id="creditCard" size={20} color="#557b39" weight="bold" />
                                 Cartão de crédito
                             </ButtonPayment>

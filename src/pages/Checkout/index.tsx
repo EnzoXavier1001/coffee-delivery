@@ -33,6 +33,7 @@ export function Checkout() {
             cep: '',
             street: '',
             complement: '',
+            number: 0,
             district: '',
             city: '',
             uf: '',

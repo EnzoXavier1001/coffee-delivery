@@ -33,7 +33,6 @@ export const FormCheckoutStyles = styled(BaseCardLayout)`
         color: ${props => props.theme['--base-text']};
         margin-bottom: 1.8rem;
     }
-
 `
 
 export const FormGroup = styled.div`
@@ -44,12 +43,15 @@ export const FormGroup = styled.div`
     input {
         flex: 1;
     }
+
+    @media (max-width: 550px) {
+        flex-direction: column;
+    }
 `
 
 export const FormPayment = styled(BaseCardLayout)`
     width: 100%;
 `
-
 
 export const ButtonWrapper = styled.div`
     display: flex;
@@ -66,6 +68,7 @@ export const FormInputComplement = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
     input {
         width: 100%;
     }
@@ -77,5 +80,9 @@ export const FormInputComplement = styled.div`
         margin-bottom: 1.8rem;
         font-size: 1.2rem;
         color: ${props => props.theme['--base-label']};
+    }
+
+    @media (max-width: 600px) {
+        flex-direction: column;
     }
 `

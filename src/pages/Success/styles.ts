@@ -44,7 +44,7 @@ export const SuccessInfo = styled.div`
 
 export const SucessInfoGroup = styled.div`
     display: flex;
-    flex: 2;
+    width: 600px;
     flex-wrap: wrap;
     flex-direction: column;
     gap: 3.2rem;
@@ -83,6 +83,9 @@ export const SucessInfoGroup = styled.div`
 		background: linear-gradient(to left, #8047F8, #DBAC2C);
 	}
 
+    address {
+        font-style: normal;
+    }
 `
 
 export const SuccessIcon = styled.div<{ $background: string}>`

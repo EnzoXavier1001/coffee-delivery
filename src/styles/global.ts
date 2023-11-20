@@ -26,4 +26,9 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 400;
         font-size: 1.6rem;
     }
+
+    &:focus {
+        box-shadow: none;
+        border-color: #8047F8 !important;
+  }
 `

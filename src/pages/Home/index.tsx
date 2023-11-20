@@ -42,7 +42,7 @@ export function Home() {
                             </li>
                         </ListBenefits>
                     </HomeContent>
-                    <img src={coffeeMainImage} alt="" />
+                    <img src={coffeeMainImage} alt="Imagem de um café com grãos ao lado em um fundo amarelo" />
                 </HomeSection>
             </HomeContainer>
             <CoffeeList />

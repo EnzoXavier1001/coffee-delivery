@@ -10,7 +10,7 @@ export function CoffeeList() {
         <CoffeeListContainer>
             <CoffeeListTitle>Nossos cafés</CoffeeListTitle>
 
-            <CardList>
+            <CardList title="Lista de cafés">
                 {coffeeList.map((coffee) => (
                     <Card 
                         key={coffee.id} 

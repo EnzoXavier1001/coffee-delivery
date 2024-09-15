@@ -4,7 +4,7 @@ import { Card } from "../Card";
 import { CartContext } from "../../context/CartContext";
 
 export function CoffeeList() {
-    const { coffeeList, handleIncreaseCart, handleSaveCart, handleDecreaseCart} = useContext(CartContext)
+    const { coffeeList } = useContext(CartContext)
 
     return (
         <CoffeeListContainer>
@@ -15,9 +15,6 @@ export function CoffeeList() {
                     <Card 
                         key={coffee.id} 
                         coffee={coffee} 
-                        onSaveCart={handleSaveCart} 
-                        onDeleteCart={handleDecreaseCart} 
-                        onAddCart={handleIncreaseCart} 
                     />
                 ))}
             </CardList>

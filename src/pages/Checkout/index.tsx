@@ -8,20 +8,20 @@ import { useCheckout } from "../../hooks/useCheckout";
 
 
 export function Checkout() {
-    const {cart, totalCart, newUserInfo, handleAddCartQuantity, handleDeleteCoffee, handleRemoveCartQuantity, handleCreateOrder, totalCartHasFreeShipping, showAmountTotalCart, canSubmit, handleSubmit } = useCheckout()
+    const checkoutState = useCheckout();
 
     return (
         <CheckoutContainer>
-            <FormCheckout onSubmit={handleSubmit(handleCreateOrder)}>
-                <FormProvider {...newUserInfo}>
+            <FormCheckout onSubmit={checkoutState.handleSubmit(checkoutState.handleCreateOrder)}>
+                <FormProvider {...checkoutState.newUserInfo}>
                     <CoffeeForm />
                 </FormProvider>
                 <CoffeeDisplay>
                     <h2>Cafés selecionados</h2>
                     <CoffeeDisplayContainer>
                         <CoffeeDisplayList>
-                            {cart.length > 0 ? (
-                                cart.map((cartItem) => (
+                            {checkoutState.cart.length > 0 ? (
+                                checkoutState.cart.map((cartItem) => (
                                     <div key={cartItem.id}>
                                         <div>
                                             <CoffeeCard>
@@ -33,11 +33,11 @@ export function Checkout() {
                                                     </header>
                                                     <ButtonsWrapper>
                                                         <div>
-                                                            <button type="button" onClick={() => handleRemoveCartQuantity(cartItem.id)}><Minus size={14} color="#8047F8" weight="bold" /></button>
+                                                            <button type="button" onClick={() => checkoutState.handleRemoveCartQuantity(cartItem.id)}><Minus size={14} color="#8047F8" weight="bold" /></button>
                                                             <span>{cartItem.quantity}</span>
-                                                            <button type="button" onClick={() => handleAddCartQuantity(cartItem.id)}><Plus size={14} color="#8047F8" weight="bold" /></button>
+                                                            <button type="button" onClick={() => checkoutState.handleAddCartQuantity(cartItem.id)}><Plus size={14} color="#8047F8" weight="bold" /></button>
                                                         </div>
-                                                        <ButtonRemove onClick={() => handleDeleteCoffee(cartItem.id)}><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
+                                                        <ButtonRemove onClick={() => checkoutState.handleDeleteCoffee(cartItem.id)}><Trash size={18} color="#8047F8" weight="bold" />Remover</ButtonRemove>
                                                     </ButtonsWrapper>
                                                 </CoffeeCardWrapper>
                                             </CoffeeCard>
@@ -51,25 +51,25 @@ export function Checkout() {
                                     <p>Não ha nenhum item na lista</p>
                                 </EmptyList>
                             )}
-                            {cart.length > 0 && (
+                            {checkoutState.cart.length > 0 && (
                                  <CoffeeTotalAmount>
                                     <div>
                                         <span>Total de itens</span>
-                                        <span>R$ {formatAmount(totalCart)}</span>
+                                        <span>R$ {formatAmount(checkoutState.totalCart)}</span>
                                     </div>
                                     <div>
                                         <span>Entrega</span>
-                                        <span>{totalCartHasFreeShipping}</span>
+                                        <span>{checkoutState.totalCartHasFreeShipping}</span>
                                     </div>
                                     <div>
                                         <span><strong>Total</strong></span>
-                                        <span>R$ {showAmountTotalCart}</span>
+                                        <span>R$ {checkoutState.showAmountTotalCart}</span>
                                     </div>
-                                    <p>Entre grátis acima de 100*</p>
+                                    <p>Entrega grátis acima de 100*</p>
                                  </CoffeeTotalAmount>
                             )}
                              
-                            <CloseOrder type="submit" disabled={canSubmit}>Confirmar perdido</CloseOrder>
+                            <CloseOrder type="submit" disabled={checkoutState.canSubmit}>Confirmar perdido</CloseOrder>
                         </CoffeeDisplayList>
                     </CoffeeDisplayContainer>
                 </CoffeeDisplay>
